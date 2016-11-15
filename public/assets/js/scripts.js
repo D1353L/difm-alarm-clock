@@ -11,21 +11,22 @@ $(document).ready(function () {
         format: "DD/MM/YYYY HH:mm",
         minDate: new Date()
     });
-var intervalId = null;
+    window.refreshIntervalId = null;
 
     $(document).on('click', '#set_wakeup_dt', function () {
         var wakeup_dt = $('#datetimepicker').data("DateTimePicker").date();
         wakeup_dt.seconds(0);
 
-        clearInterval(intervalId);
+        if(window.refreshIntervalId) clearInterval(window.refreshIntervalId);
 
         if(wakeup_dt > moment())
         {
             var timeout = wakeup_dt - moment(),
                 duration = moment.duration(timeout, 'milliseconds'),
-                interval = 1000;
+                interval = 1000
+                success = false;
 
-            intervalId = setInterval(function(){
+            window.refreshIntervalId = setInterval(function(){
                 duration = moment.duration(duration.asMilliseconds() - interval, 'milliseconds');
 
                 if(duration > moment.duration(0))
@@ -35,9 +36,13 @@ var intervalId = null;
                 else
                 {
                     msg =  "WAKEUP!";
+                    var win = window.open('http://prem2.di.fm/indiedance_hi?cfb618d075b5069c0e122e26', '_blank');
+                    if(win) win.focus();
+                    success = true;
                 }
 
                 $('#time_to_wakeup').text(msg);
+                if(success) clearInterval(window.refreshIntervalId);
             }, interval);
         }
         else {alert("Wakeup datetime should be in the future");}
