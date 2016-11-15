@@ -6,7 +6,6 @@ class Racker
     @request = Rack::Request.new(env)
     case @request.path
     when '/' then index
-    when '/set_wakeup_dt' then set_wakeup_dt
     else not_found
     end
   end
@@ -18,16 +17,6 @@ class Racker
 
   def index
     Rack::Response.new(render('index.html.erb'))
-  end
-
-  def set_wakeup_dt
-    @wakeup = DateTime.new(@request[:wakeup_dt])
-    Rack::Response.new(@wakeup)
-  end
-
-  def set_current_client_dt
-    @current = DateTime.new(@request[:current_dt])
-    Rack::Response.new(@current)
   end
 
   def not_found
