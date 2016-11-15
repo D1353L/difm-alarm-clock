@@ -1,9 +1,10 @@
 $(document).ready(function () {
 
+    LoadStationsDropdown('/public/assets/data/stations.json');
+
     setInterval(function(){
         $('#time_now').text(new Date());
     }, 500);
-
 
     $('#datetimepicker').datetimepicker({
         inline: true,
@@ -36,7 +37,7 @@ $(document).ready(function () {
                 else
                 {
                     msg =  "WAKEUP!";
-                    var win = window.open('http://prem2.di.fm/indiedance_hi?cfb618d075b5069c0e122e26', '_blank');
+                    var win = window.open($('#stations > select').val(), '_blank');
                     if(win) win.focus();
                     success = true;
                 }
@@ -49,3 +50,14 @@ $(document).ready(function () {
     });
 
 });
+
+function LoadStationsDropdown(filePath)
+{
+    $.getJSON(filePath, function(data) {
+        var select = document.createElement("select");
+        data.forEach(function(item){
+            select.options.add( new Option(item.name, item.url));
+        });
+        $('#stations').append(select);
+    });
+}
