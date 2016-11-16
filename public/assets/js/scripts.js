@@ -1,3 +1,11 @@
+window.onload=function(){
+     $(function(){
+         if(window.location.protocol==="https:")
+             window.location.protocol="http";
+     });
+ }
+
+
 $(document).ready(function () {
 
     LoadStationsDropdown('/public/assets/data/stations.json');
