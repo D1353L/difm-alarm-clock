@@ -35,6 +35,8 @@ $(document).ready(function () {
                 interval = 1000
                 success = false;
 
+            $('#player > iframe').remove();
+
             window.refreshIntervalId = setInterval(function(){
                 duration = moment.duration(duration.asMilliseconds() - interval, 'milliseconds');
 
