@@ -37,8 +37,7 @@ $(document).ready(function () {
                 else
                 {
                     msg =  "WAKEUP!";
-                    var win = window.open($('#stations > select').val(), '_blank');
-                    if(win) win.focus();
+                    AddPlayer($('#stations > select').val());
                     success = true;
                 }
 
@@ -60,4 +59,12 @@ function LoadStationsDropdown(filePath)
         });
         $('#stations').append(select);
     });
+}
+
+function AddPlayer(link)
+{
+    var frame = document.createElement('iframe');
+    frame.src = link;
+    frame.style = "height: 40px;"
+    $('#player').append(frame);
 }
